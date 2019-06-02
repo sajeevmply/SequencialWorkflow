@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	
+	<!-- Vehicle workflow process -->
+	<bean id="sequenceWorkflow" class="com.sajeev.wf.base.SequenceWorkflow">
+		<property name="activities">
+			<list>
+				<ref bean="logRequestActivity" />
+				<ref bean="validateUserActivity" />
+				<ref bean="processVehicleActivity" />
+			</list>
+		</property>
+		<property name="workFlowContextClass">
+			<value>com.sajeev.wf.vehicle.VehicleContext</value>
+		</property>
+		<property name="defaultErrorHandler">
+			<ref bean="errorHandler"></ref>
+		</property>
+	</bean>
+	
+	<!-- Vehicle workflow activities -->
+	<bean id="logRequestActivity" class="com.sajeev.wf.vehicle.LogRequestActivity" />
+	<bean id="validateUserActivity" class="com.sajeev.wf.vehicle.ValidateUserActivity" />
+	<bean id="processVehicleActivity" class="com.sajeev.wf.vehicle.ProcessVehicleActivity" />
+	<bean id="errorHandler" class="com.sajeev.wf.vehicle.VehicleErrorHandler" />
+
+	<bean id="vehicleContext" class="com.sajeev.wf.vehicle.VehicleContext" scope="prototype" />
+	
+</beans>
